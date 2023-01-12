@@ -1,5 +1,13 @@
+import AllRoutes from "./routes";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./design/theme";
+
 function App() {
-  return <div className="App"></div>;
+  return (
+    <ChakraProvider theme={theme}>
+      <AllRoutes />
+    </ChakraProvider>
+  );
 }
 
 export default App;
