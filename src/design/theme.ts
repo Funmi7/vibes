@@ -353,13 +353,12 @@ const shadows = {
   "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
   outline: "0 0 0 3px rgba(66, 153, 225, 0.6)",
   card: "-3px -3px 0px rgba(238, 238, 244, 0.2), 2px 3px 4px rgba(235, 235, 255, 0.3)",
-  outline2: `inset 0 0 0px 1px ${colors.gray[250]}`,
+
   card1: "0px 0px 4px rgba(0, 0, 0, 0.25)",
   card2: "0px 4px 16px rgba(0, 0, 0, 0.08)",
   card3:
     "0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)",
   inner: "inset 0 2px 4px 0 rgba(0,0,0,0.06)",
-  topNavShadow: `0px 1px 0px ${colors.gray[250]}`,
   avatar:
     "0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)",
   none: "none",
