@@ -1,11 +1,10 @@
 import React from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import MainLayout from "layouts/MainLayout";
 
 const Homepage = () => {
   return (
-    <Flex>
-      <Text>Joy to the world</Text>
-    </Flex>
+    <MainLayout>
+    </MainLayout>
   );
 };
 
