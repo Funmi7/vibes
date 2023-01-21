@@ -86,42 +86,28 @@ const colors = {
   current: "currentColor",
   black: "#000",
   white: "#fff",
-  disabled: "#E0E2DF",
-  headerPrimary: "#14142B",
-  textPrimary: "#394455",
-  textSecondary: "#A0A8A9",
-  textLabel: "#E5E5E5",
-  textPlaceholder: "#EFF0F6",
-  textLine: "#DCD6CF",
-  inputBg: "#EFF0F7",
-  primaryBg: "#1D2123;",
-  purpleBlue: "#5865ff",
-  tint: "#00000040",
-  coffee: "#202020",
-  ashblue: "#6495ED",
-  error: "#E30000",
-  errorBody: "#F23122",
-  stream: "#F5B041",
-  fade: "#ffffff60",
-  success: "#029457",
-  info: "#3182ce",
-  warning: "#E1651D",
-  errorBg: "#FEF3F2",
-  // errorBody: '#F23122',
-  warningBg: "#FFFAEB",
-  betaBlue: "#2874A6",
-  deeBlue: "#2da44e",
-  backdropBlur: "#F7F7F885",
-  lightPurple: "#B6B9FF60",
-  highlight: "#FAFBFC",
-  subtle: "#4A235A",
-  ligten: "#ffffff50",
-  subvisible: "#ffffff90",
-  offwhiteBorder: "#E5E7E945",
-  lightBorder: "#E5E7E960",
-  mediumBorder: "#E5E7E990",
+  primaryBg: "#1D2123",
+  menuBg: "#1A1E1F",
+  mainSecondary: "#FACD66",
+  // disabled: "#E0E2DF",
+  // headerPrimary: "#14142B",
+  // textPrimary: "#394455",
+  // textSecondary: "#A0A8A9",
+  // textLabel: "#E5E5E5",
+  // textPlaceholder: "#EFF0F6",
+  // textLine: "#DCD6CF",
+  // inputBg: "#EFF0F7",
+
+  // error: "#E30000",
+  // errorBody: "#F23122",
+  // success: "#029457",
+  // info: "#3182ce",
+  // warning: "#E1651D",
+  // errorBg: "#FEF3F2",
+  // warningBg: "#FFFAEB",
   gray: {
     100: "#ffffff3f",
+    200: "#efeee03f",
   },
 };
 
@@ -174,6 +160,7 @@ const radii = {
   xl: "0.75rem",
   "2xl": "1rem",
   "3xl": "1.5rem",
+  "4xl": "2rem",
   round: "50%",
   full: "9999px",
 };
@@ -196,7 +183,6 @@ const borders = {
   "2px": "2px solid",
   "4px": "4px solid",
   "8px": "8px solid",
-  disabled: `1px solid ${colors.disabled}`,
 };
 
 const durations = {
@@ -227,7 +213,6 @@ const customFonts = {
   heading: `"Quicksand", sans-serif`,
   body: `"Quicksand", sans-serif`,
 };
-
 
 const customTheme = {
   styles: {

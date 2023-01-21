@@ -1,6 +1,7 @@
 import { Flex, Box, HStack, Img } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
 import SearchComponent from "./common/SearchComponent";
+import LeftSideNav from "./components/LeftSideNav";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -15,7 +16,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           <SearchComponent />
         </Box>
       </HStack>
-      <Box>{children}</Box>
+      <Flex pl="5">
+        <Box>
+          <LeftSideNav />
+        </Box>
+        <Box>{children}</Box>
+      </Flex>
     </Flex>
   );
 };
