@@ -1,6 +1,5 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "design/icons/SearchIcon";
-import React from "react";
 
 const SearchComponent = () => {
   return (

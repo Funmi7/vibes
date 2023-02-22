@@ -42,7 +42,7 @@ const breakpoints = {
   sm: "20em", // 320px
   md: "48em", // 768px
   lg: "64em", // 1024px
-  xl: "75em", // 1200px
+  xl: "80em", // 1280px
   "2xl": "90em", // 1440px
 };
 
@@ -70,6 +70,37 @@ const sizes = {
     md: "768px",
     lg: "1024px",
     xl: "1280px",
+  },
+};
+
+const textStyles = {
+  h1: {
+    fontWeight: 700,
+    fontSize: "35px",
+    lineHeight: "120%",
+    color: "#FFFFFF",
+  },
+  h2: {
+    fontWeight: 700,
+    fontSize: "2xl",
+    lineHeight: "120%",
+    color: "#FFFFFF",
+  },
+
+  smaller: {
+    fontWeight: 400,
+    fontSize: "xs",
+    lineHeight: "120%",
+  },
+  small: {
+    fontWeight: 400,
+    fontSize: "sm",
+    lineHeight: "120%",
+  },
+  bigText: {
+    fontWeight: 400,
+    fontSize: "17px",
+    lineHeight: "120%",
   },
 };
 
@@ -108,6 +139,8 @@ const colors = {
   gray: {
     100: "#ffffff3f",
     200: "#efeee03f",
+    300: "#ffffff7f",
+    400: "#ffffff1c",
   },
 };
 
@@ -233,6 +266,9 @@ const customTheme = {
   //   components,
   breakpoints,
   fonts: customFonts,
+  textStyles: textStyles,
 };
+
+export type CustomTheme = typeof customTheme;
 
 export default extendTheme(customTheme);
