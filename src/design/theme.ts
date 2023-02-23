@@ -86,7 +86,11 @@ const textStyles = {
     lineHeight: "120%",
     color: "#FFFFFF",
   },
-
+  h4: {
+    fontWeight: 700,
+    fontSize: "sm",
+    lineHeight: "120%",
+  },
   smaller: {
     fontWeight: 400,
     fontSize: "xs",
@@ -100,6 +104,11 @@ const textStyles = {
   bigText: {
     fontWeight: 400,
     fontSize: "17px",
+    lineHeight: "120%",
+  },
+  smallest: {
+    fontWeight: 400,
+    fontSize: "10px",
     lineHeight: "120%",
   },
 };
@@ -141,6 +150,8 @@ const colors = {
     200: "#efeee03f",
     300: "#ffffff7f",
     400: "#ffffff1c",
+    500: "#ffffff70",
+    600: "#ffffffa",
   },
 };
 
