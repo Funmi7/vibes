@@ -1,7 +1,7 @@
 import { Flex, Box, HStack, Img } from "@chakra-ui/react";
 import { FC, ReactNode } from "react";
 
-import AudioPlayer from "screens/common/AudioPlayer";
+import AudioPlayer from "screens/common/audioplayer/AudioPlayer";
 import SearchComponent from "./common/SearchComponent";
 import LeftSideNav from "./components/LeftSideNav";
 
