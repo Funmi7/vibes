@@ -36,6 +36,8 @@ const AudioPlayer = () => {
   const [volume, setVolume] = useState<number>(60);
   const [muteVolume, setMuteVolume] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<number>(0);
+  const [repeatSong, setRepeatSong] = useState<boolean>(false);
+  const [shuffleSong, setShuffleSong] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
@@ -71,6 +73,34 @@ const AudioPlayer = () => {
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
+
+  const handleRepeatSong = () => {
+    if (repeatSong) {
+      setTrackIndex((prev) => prev);
+      setCurrentTrack(songs[trackIndex]);
+    }
+  };
+
+  const handleSuffleSong = () => {
+    let lastIndex = trackIndex;
+    if (shuffleSong) {
+      const randomIndex = Math.floor(Math.random() * songs.length);
+      if (randomIndex !== lastIndex) {
+        setTrackIndex(randomIndex);
+        setCurrentTrack(songs[randomIndex]);
+        lastIndex = randomIndex;
+        console.log(lastIndex);
+      } else {
+        handleSuffleSong();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.loop = repeatSong;
+    }
+  }, [repeatSong]);
 
   const playAnimationRef = useRef<number>();
 
@@ -150,11 +180,29 @@ const AudioPlayer = () => {
           src={currentTrack.src}
           ref={audioRef}
           onLoadedMetadata={onLoadedMetadata}
-          onEnded={handleNext}
+          onEnded={
+            repeatSong
+              ? handleRepeatSong
+              : shuffleSong
+              ? handleSuffleSong
+              : handleNext
+          }
         />
 
         <HStack>
-          <ShuffleIcon fill="white" w="16px" h="16px" />
+          <IconButton
+            aria-label="Shuffle song"
+            icon={
+              <ShuffleIcon fill={shuffleSong ? "mainSecondary" : "white"} />
+            }
+            bg="transparent"
+            _hover={{
+              bg: "transparent",
+            }}
+            w="16px"
+            h="16px"
+            onClick={() => setShuffleSong(!shuffleSong)}
+          />
           <IconButton
             aria-label="previous song"
             icon={<SongBackIcon />}
@@ -164,7 +212,7 @@ const AudioPlayer = () => {
             _hover={{
               bg: "transparent",
             }}
-            onClick={handlePrevious}
+            onClick={shuffleSong ? handleSuffleSong : handlePrevious}
           />
           <Flex
             as="button"
@@ -191,16 +239,19 @@ const AudioPlayer = () => {
             _hover={{
               bg: "transparent",
             }}
-            onClick={handleNext}
+            onClick={shuffleSong ? handleSuffleSong : handleNext}
           />
           <IconButton
             aria-label="repeat song"
-            icon={<RepeatSongIcon />}
+            icon={
+              <RepeatSongIcon fill={repeatSong ? "mainSecondary" : "white"} />
+            }
             bg="transparent"
             pl="50.67px"
             _hover={{
               bg: "transparent",
             }}
+            onClick={() => setRepeatSong(!repeatSong)}
           />
         </HStack>
         <HStack pt="9.73px" w="full">
@@ -259,7 +310,7 @@ const AudioPlayer = () => {
             onChange={(val) => setVolume(val)}
           >
             <SliderTrack>
-              <SliderFilledTrack />
+              <SliderFilledTrack bg={"mainSecondary"} />
             </SliderTrack>
             <SliderThumb />
           </Slider>
