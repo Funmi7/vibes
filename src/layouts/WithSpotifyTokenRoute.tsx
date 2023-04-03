@@ -1,5 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { getHashParams, removeHashParamsFromUrl } from "utils/hash";
 import {
@@ -11,14 +12,14 @@ import {
   setStoredExpiryTime,
 } from "utils/cookiesUtil";
 import { setSpotifyToken } from "api/spotifyApi";
-import { UserContext } from "common/context/UserContext";
 import { getAuthorizeHref } from "oauthConfig";
+import { setLoggedOff } from "redux/reducers/authorizationSlice";
 
 const TEN_MINUTES = 600000; // In Milliseconds
 const unixTimeNow = new Date().getTime(); // Unix time in milliseconds
 
 const hashParams = getHashParams();
-const freshToken = hashParams.acccess_token;
+const freshToken = hashParams.access_token;
 const expiresIn = hashParams.expires_in; // Seconds
 const expiryTime = unixTimeNow + Number(expiresIn) * 1000;
 
@@ -33,10 +34,10 @@ if (freshToken) {
   setSpotifyToken(storedToken);
 }
 
-const WithSpotifyTokenRoute = () => {
-  const { funcs } = useContext(UserContext);
+console.log(freshToken);
 
-  const { handleLoggedOff } = funcs;
+const WithSpotifyTokenRoute = () => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (getStoredAccessToken()) {
@@ -44,15 +45,15 @@ const WithSpotifyTokenRoute = () => {
       if (storedExpiryTime) {
         const unixTimeExpiry = Number(storedExpiryTime);
         if (unixTimeNow > unixTimeExpiry) {
-          handleLoggedOff();
+          dispatch(setLoggedOff());
         } else if (unixTimeNow > unixTimeExpiry - TEN_MINUTES) {
           removeStoredAccessToken();
           removeStoredExpiryTime();
           window.open(getAuthorizeHref(), "_self");
         }
       }
-    } else if (!freshToken) handleLoggedOff();
-  }, [handleLoggedOff]);
+    } else if (!freshToken) dispatch(setLoggedOff());
+  }, [dispatch]);
   return <Outlet />;
 };
 

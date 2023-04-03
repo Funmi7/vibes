@@ -1,10 +1,8 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 export const scopes = [
-  "user-top-read",
-  "user-read-currently-playing",
-  "user-read-playback-state",
   "user-read-private",
+  "user-top-read",
   "playlist-read-private",
   "playlist-read-collaborative",
 ];

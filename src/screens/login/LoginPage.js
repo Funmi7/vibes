@@ -1,7 +1,24 @@
 import { Button, Flex, Text, Box, Heading } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { BsSpotify } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+
+import { getAuthorizeHref } from "oauthConfig";
+import { setLoggedIn, setLoggedOff } from "redux/reducers/authorizationSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setLoggedOff());
+  }, [dispatch]);
+
+  const handleButtonClicked = (e) => {
+    e.preventDefault();
+    dispatch(setLoggedIn());
+    window.open(getAuthorizeHref(), "_self");
+  };
+
   return (
     <Flex
       w="100%"
@@ -27,6 +44,7 @@ const Login = () => {
           h="68px"
           w="400px"
           leftIcon={<BsSpotify size="30px" color="white" />}
+          onClick={handleButtonClicked}
         >
           <Text textStyle="h2" color="white" ml="4">
             Log in with Spotify

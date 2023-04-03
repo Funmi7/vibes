@@ -1,17 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "../screens/home/Homepage";
 
-import UserStateContext from "common/context/UserContext";
 import Login from "screens/login/LoginPage";
+import WithSpotifyTokenRoute from "layouts/WithSpotifyTokenRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const AllRoutes = () => {
   return (
-    <UserStateContext>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Homepage />} />
-      </Routes>
-    </UserStateContext>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<WithSpotifyTokenRoute />}>
+        <Route path="/" element={<PrivateRoute component={Homepage} />} />
+      </Route>
+    </Routes>
   );
 };
 
