@@ -3,15 +3,8 @@ import { FC } from "react";
 
 import { HeartIcon } from "design/icons/HeartIcon";
 
-type ChartDataType = {
-  img: string;
-  title: string;
-  artiste: string;
-  length: string;
-};
-
 type ChartCardProps = {
-  chart: ChartDataType;
+  chart: SpotifyApi.PlaylistObjectSimplified;
 };
 
 const ChartCard: FC<ChartCardProps> = ({ chart }) => {
@@ -25,13 +18,20 @@ const ChartCard: FC<ChartCardProps> = ({ chart }) => {
       justifyContent="space-between"
     >
       <HStack>
-        <Img src={chart.img} />
+        <Box w="63px" h="63px">
+          <Img
+            src={chart.images[0].url}
+            maxW="100%"
+            maxH="100%"
+            borderRadius="10px"
+          />
+        </Box>
         <Box pl={3.5}>
           <Text textStyle="bigText" color="white">
-            {chart.title}
+            {chart.name}
           </Text>
           <Text textStyle="smaller" color="gray.300">
-            {chart.artiste}
+            {chart.owner.display_name}
           </Text>
         </Box>
       </HStack>

@@ -1,3 +1,7 @@
+import SpotifyWebApi from "spotify-web-api-js";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import {
   Flex,
   Heading,
@@ -8,29 +12,39 @@ import {
   Img,
 } from "@chakra-ui/react";
 import ChartCard from "../atoms/ChartCard";
+import { setLoggedOff } from "redux/reducers/authorizationSlice";
 
-const chartData = [
-  {
-    img: "/img/chartImages/golden.svg",
-    title: "Golden age of 80s",
-    artiste: "Sean swadder",
-    length: "2:34:45",
-  },
-  {
-    img: "/img/chartImages/reggae.svg",
-    title: "Reggae “n” blues",
-    artiste: "Dj YK mule",
-    length: "2:34:45",
-  },
-  {
-    img: "/img/chartImages/tomorrow.svg",
-    title: "Tomorrow’s tunes",
-    artiste: "Obi Datti",
-    length: "2:01:25",
-  },
-];
+const spotifyApi = new SpotifyWebApi();
 
 const TopSection = () => {
+  const [featuredPlaylist, setFeaturedPlaylist] = useState<
+    SpotifyApi.PlaylistObjectSimplified[]
+  >([]);
+  const [userPlaylists, setUserPlaylists] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getFeaturedPlaylist = async () => {
+      return await spotifyApi.getFeaturedPlaylists().then(
+        (data) => {
+          setFeaturedPlaylist(data.playlists.items);
+        },
+        (error) => {
+          if (error.status === 401) dispatch(setLoggedOff());
+          console.log(error);
+        }
+      );
+    };
+    getFeaturedPlaylist();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const getUserPlaylists = async () => {
+      return await spotifyApi.getUserPlaylists().then(() => {});
+    };
+  });
+
   return (
     <Flex justifyContent="space-between" w={{ sm: "100%", "2xl": "100%" }}>
       <HStack
@@ -67,9 +81,9 @@ const TopSection = () => {
       </HStack>
       <VStack spacing={3} alignItems="flex-start" ml="22px" w="50%">
         <Heading textStyle="h2" mb="14px">
-          Top charts
+          Editor's pick
         </Heading>
-        {chartData.map((chart) => (
+        {featuredPlaylist.slice(0, 3).map((chart) => (
           <ChartCard chart={chart} />
         ))}
       </VStack>
