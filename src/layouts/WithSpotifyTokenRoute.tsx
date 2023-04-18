@@ -34,8 +34,6 @@ if (freshToken) {
   setSpotifyToken(storedToken);
 }
 
-console.log(freshToken);
-
 const WithSpotifyTokenRoute = () => {
   const dispatch = useDispatch();
 

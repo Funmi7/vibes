@@ -149,19 +149,23 @@ const AudioPlayer = () => {
   };
 
   return (
+    // <Box position="relative" w="100%" height="125px">
+    //   <Box filter="blur(8px)" webkit-filter="blur(8px)" height="100%" />
     <HStack
       w="100%"
       height="125px"
-      filter="drop-shadow(0px -25px 100px rgba(16, 16, 16, 0.51))"
       background="rgba(29, 33, 35, 0.3)"
+      // backgroundColor="rgba(0,0,0, 0.4)"
       border="1px solid rgba(255, 255, 255, 0.1)"
-      backdrop-filter="blur(15px)"
+      backdropFilter="blur(15px)"
       pl="101px"
       pt="20px"
       position="fixed"
       bottom="0px"
       justifyContent="space-between"
       pr="66px"
+      // webkit-filter="blur(8px)"
+      // filter="blur(8px)"
     >
       <Flex>
         <Img src="/img/audioImages/song-image.svg" alt="song art cover" />
@@ -317,6 +321,7 @@ const AudioPlayer = () => {
         </Box>
       </HStack>
     </HStack>
+    // </Box>
   );
 };
 

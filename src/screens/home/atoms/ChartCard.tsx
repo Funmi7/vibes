@@ -35,7 +35,7 @@ const ChartCard: FC<ChartCardProps> = ({ chart }) => {
           </Text>
         </Box>
       </HStack>
-      <Flex
+      {/* <Flex
         width="37px"
         height="37px"
         border="1px solid"
@@ -45,7 +45,7 @@ const ChartCard: FC<ChartCardProps> = ({ chart }) => {
         justifyContent="center"
       >
         <HeartIcon w="18px" h="18px" fill="transparent" />
-      </Flex>
+      </Flex> */}
     </HStack>
   );
 };
