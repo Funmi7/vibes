@@ -1,6 +1,7 @@
 import SpotifyWebApi from "spotify-web-api-js";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   Flex,
@@ -29,6 +30,7 @@ const TopSection = () => {
   >([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getFeaturedPlaylist = async () => {
@@ -100,7 +102,13 @@ const TopSection = () => {
           <Text textStyle="smaller" color="white">
             Editor's pick
           </Text>
-          <Heading textStyle="h1">{featuredPlaylist?.name}</Heading>
+          <Heading
+            textStyle="h1"
+            onClick={() => navigate(`/${featuredPlaylist?.id}`)}
+            cursor="pointer"
+          >
+            {featuredPlaylist?.name}
+          </Heading>
           <Text textStyle="small" color="white">
             {featuredTracks.slice(0, 5).map((data) => (
               <span>{data.track.name}, </span>

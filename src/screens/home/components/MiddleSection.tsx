@@ -6,20 +6,6 @@ import { useDispatch } from "react-redux";
 import SongCard from "../atoms/SongCard";
 import { setLoggedOff } from "redux/reducers/authorizationSlice";
 
-const newReleasesData = [
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-  { image: "/img/chartImages/new-release.svg", title: "Life in a bubble" },
-];
 const spotifyApi = new SpotifyWebApi();
 
 const MiddleSection = () => {

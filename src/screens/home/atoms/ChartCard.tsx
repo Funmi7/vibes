@@ -1,7 +1,5 @@
-import { HStack, Img, Box, Text, Flex } from "@chakra-ui/react";
+import { HStack, Img, Box, Text } from "@chakra-ui/react";
 import { FC } from "react";
-
-import { HeartIcon } from "design/icons/HeartIcon";
 
 type ChartCardProps = {
   chart: SpotifyApi.PlaylistObjectSimplified;

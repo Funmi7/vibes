@@ -129,22 +129,8 @@ const colors = {
   primaryBg: "#1D2123",
   menuBg: "#1A1E1F",
   mainSecondary: "#FACD66",
-  // disabled: "#E0E2DF",
-  // headerPrimary: "#14142B",
-  // textPrimary: "#394455",
-  // textSecondary: "#A0A8A9",
-  // textLabel: "#E5E5E5",
-  // textPlaceholder: "#EFF0F6",
-  // textLine: "#DCD6CF",
-  // inputBg: "#EFF0F7",
-
-  // error: "#E30000",
-  // errorBody: "#F23122",
-  // success: "#029457",
-  // info: "#3182ce",
-  // warning: "#E1651D",
-  // errorBg: "#FEF3F2",
-  // warningBg: "#FFFAEB",
+  cyanBlue: "#A4C7C6",
+  red: "#E5524A",
   gray: {
     100: "#ffffff3f",
     200: "#efeee03f",
@@ -152,6 +138,7 @@ const colors = {
     400: "#ffffff1c",
     500: "#ffffff70",
     600: "#ffffffa",
+    700: "#EFEEE0",
   },
 };
 
