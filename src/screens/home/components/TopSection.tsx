@@ -53,7 +53,6 @@ const TopSection = () => {
       return await spotifyApi.getPlaylistTracks(firstPlaylist).then(
         (data) => {
           setFeaturedTracks(data.items);
-          console.log(data);
         },
         (error) => {
           if (error.status === 401) dispatch(setLoggedOff());

@@ -1,11 +1,13 @@
 import { HStack, Img, Box, Text } from "@chakra-ui/react";
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 type ChartCardProps = {
   chart: SpotifyApi.PlaylistObjectSimplified;
 };
 
 const ChartCard: FC<ChartCardProps> = ({ chart }) => {
+  const navigate = useNavigate();
   return (
     <HStack
       bg="menuBg"
@@ -14,6 +16,8 @@ const ChartCard: FC<ChartCardProps> = ({ chart }) => {
       pr="21px"
       w="100%"
       justifyContent="space-between"
+      onClick={() => navigate(`/${chart.id}`, { state: { isAlbum: false } })}
+      cursor="pointer"
     >
       <HStack>
         <Box w="63px" h="63px">

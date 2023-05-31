@@ -5,6 +5,10 @@ export const scopes = [
   "user-top-read",
   "playlist-read-private",
   "playlist-read-collaborative",
+  "user-read-currently-playing",
+  "user-read-recently-played",
+  "user-read-playback-state",
+  "user-modify-playback-state",
 ];
 
 export const getAuthorizeHref = (path?: string): string => {

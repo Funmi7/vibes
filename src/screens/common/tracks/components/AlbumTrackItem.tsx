@@ -1,13 +1,20 @@
+import React from "react";
 import { FC, useEffect, useState } from "react";
 import { HStack, Box, Img, Text } from "@chakra-ui/react";
 
 import { WhiteHeartIcon } from "design/icons/WhiteHeartIcon";
 
-type TrackItemProps = {
-  trackItem: SpotifyApi.TrackObjectFull;
+type AlbumTrackItemProps = {
+  trackItem: SpotifyApi.TrackObjectSimplified;
+  image: string;
+  albumName: string;
 };
 
-const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
+const AlbumTrackItem: FC<AlbumTrackItemProps> = ({
+  trackItem,
+  image,
+  albumName,
+}) => {
   const [readableDur, setReadableDur] = useState("");
 
   useEffect(() => {
@@ -33,7 +40,7 @@ const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
     >
       <HStack w="10%">
         <Box w="39px" h="39px" mr="20.13px">
-          <Img src={trackItem.album.images[0].url} borderRadius="8.53125px" />
+          <Img src={image} borderRadius="8.53125px" />
         </Box>
         <WhiteHeartIcon w="18px" h="16px" fill="transparent" />
       </HStack>
@@ -42,7 +49,7 @@ const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
         {trackItem.name}
       </Text>
       <Text textStyle="smaller" color="white" w="25%">
-        {trackItem.album ? trackItem.album.name : "Single"}
+        {albumName}
       </Text>
       <Text textStyle="smaller" color="white">
         {readableDur}
@@ -51,4 +58,4 @@ const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
   );
 };
 
-export default TrackItems;
+export default AlbumTrackItem;

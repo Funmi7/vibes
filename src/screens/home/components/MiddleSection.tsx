@@ -32,8 +32,8 @@ const MiddleSection = () => {
     <Box mt="43px" w="full">
       <Heading textStyle="h2">New releases.</Heading>
       <Flex mt="13px" w="full" flexWrap="wrap">
-        {newReleases.slice(0, 16).map(({ images, name }) => (
-          <SongCard image={images[1].url} title={name} />
+        {newReleases.slice(0, 16).map(({ images, name, id }) => (
+          <SongCard image={images[1].url} title={name} id={id} />
         ))}
       </Flex>
     </Box>

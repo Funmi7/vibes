@@ -11,28 +11,40 @@ import {
 import { AddCollectionIcon } from "design/icons/AddCollectionIcon";
 import { HeartIcon } from "design/icons/HeartIcon";
 import { PlayAllIcon } from "design/icons/playAllIcon";
+import { FC } from "react";
 
-const TopSection = () => {
+type PlaylistDescProps = {
+  name?: string;
+  description?: string | null;
+  image?: string;
+  totalTracks?: string | number;
+};
+
+const TopSection: FC<PlaylistDescProps> = ({
+  name,
+  description,
+  image,
+  totalTracks,
+}) => {
   return (
     <HStack justifyContent="flex-start" w="full">
       <Box width="284px" height="288.97px">
-        <Img
-          src={"img/lead-image.png"}
-          borderRadius="35.1703px"
-          maxW="100%"
-          maxH="100%"
-        />
+        <Img borderRadius="35.1703px" maxW="100%" maxH="100%" src={image} />
       </Box>
       <VStack pl="27px" alignItems={"flex-start"}>
         <Heading textStyle="h1" color="cyanBlue" textAlign="start">
-          Tomorrow’s tunes
+          {name}
         </Heading>
         <Text textStyle={"small"} color="gray.700" pt="9px">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-          purus sit amet luctus venenatis
+          {description}
         </Text>
         <Text textStyle={"small"} color="gray.700" pt="10px">
-          64 songs ~ 16 hrs+
+          {totalTracks}{" "}
+          {totalTracks && totalTracks > 1
+            ? "songs"
+            : totalTracks && totalTracks === 1
+            ? "song"
+            : ""}
         </Text>
         <HStack pt="40px" spacing={"9px"}>
           <HStack
