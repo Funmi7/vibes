@@ -2,12 +2,15 @@ import { Button, Flex, Text, Box, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { BsSpotify } from "react-icons/bs";
 import { useDispatch } from "react-redux";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
-import { getAuthorizeHref } from "oauthConfig";
+import { auth, provider } from "../../firebaseConfig";
 import { setLoggedIn, setLoggedOff } from "redux/reducers/authorizationSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(setLoggedOff());
@@ -15,8 +18,17 @@ const Login = () => {
 
   const handleButtonClicked = (e) => {
     e.preventDefault();
-    dispatch(setLoggedIn());
-    window.open(getAuthorizeHref(), "_self");
+    signInWithPopup(auth, provider).then((result) => {
+      dispatch(setLoggedIn());
+      navigate("/");
+    });
+  };
+
+  const logoutClicked = () => {
+    signOut(auth).then(() => {
+      dispatch(setLoggedOff());
+      navigate("/login");
+    });
   };
 
   return (
@@ -47,7 +59,7 @@ const Login = () => {
           onClick={handleButtonClicked}
         >
           <Text textStyle="h2" color="white" ml="4">
-            Log in with Spotify
+            Log in with Google
           </Text>
         </Button>
       </Flex>

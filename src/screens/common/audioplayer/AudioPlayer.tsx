@@ -18,6 +18,8 @@ import {
   BsVolumeDownFill,
   BsFillVolumeUpFill,
 } from "react-icons/bs";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "redux/store";
 
 import { PlayIcon } from "design/icons/PlayIcon";
 import { RepeatSongIcon } from "design/icons/RepeatSongIcon";
@@ -25,14 +27,27 @@ import { ShuffleIcon } from "design/icons/ShuffleIcon";
 import { SongBackIcon } from "design/icons/SongBackIcon";
 import { SongForwardIcon } from "design/icons/SongForwardIcon";
 import { songs } from "common/dummydata/Tracks";
-import { SongType } from "common/types";
+import { SongType, TrackType } from "common/types";
+import { setCurrentTrack, setIsPlaying } from "redux/reducers/audioPlayerSlice";
 
 const AudioPlayer = () => {
+  const songsList = useSelector(
+    (state: RootState) => state.audioPlayer?.songList
+  );
+  // console.log(songsList[0]);
+  const currentTrack = useSelector(
+    (state: RootState) => state.audioPlayer.currentTrack
+  );
+  const isPlaying = useSelector(
+    (state: RootState) => state.audioPlayer.isPlaying
+  );
   const [trackIndex, setTrackIndex] = useState<number>(0);
-  const [currentTrack, setCurrentTrack] = useState<SongType>(songs[0]);
+  // const [currentTrack, setCurrentTrack] = useState<TrackType | undefined>(
+  //   songsList[0]
+  // );
   const [timeProgress, setTimeProgress] = useState<number | undefined>(0);
   const [duration, setDuration] = useState<number | undefined>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(60);
   const [muteVolume, setMuteVolume] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<number>(0);
@@ -50,28 +65,30 @@ const AudioPlayer = () => {
     }
   };
 
+  const dispatch = useDispatch();
+
   const handleNext = () => {
-    if (trackIndex >= songs.length - 1) {
+    if (trackIndex >= songsList.length - 1) {
       setTrackIndex(0);
-      setCurrentTrack(songs[0]);
+      dispatch(setCurrentTrack(songsList[0]));
     } else {
       setTrackIndex((prev) => prev + 1);
-      setCurrentTrack(songs[trackIndex + 1]);
+      dispatch(setCurrentTrack(songsList[trackIndex + 1]));
     }
   };
   const handlePrevious = () => {
     if (trackIndex === 0) {
-      let lastTrackIndex = songs.length - 1;
+      let lastTrackIndex = songsList.length - 1;
       setTrackIndex(lastTrackIndex);
-      setCurrentTrack(songs[lastTrackIndex]);
+      dispatch(setCurrentTrack(songs[lastTrackIndex]));
     } else {
       setTrackIndex((prev) => prev - 1);
-      setCurrentTrack(songs[trackIndex - 1]);
+      dispatch(setCurrentTrack(songs[trackIndex - 1]));
     }
   };
 
   const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+    dispatch(setIsPlaying(!isPlaying));
   };
 
   const handleRepeatSong = () => {
@@ -171,17 +188,17 @@ const AudioPlayer = () => {
         <Img src="/img/audioImages/song-image.svg" alt="song art cover" />
         <Box mt="2px" ml="13px">
           <Text textStyle="h4" color="white">
-            {currentTrack.title}
+            {currentTrack?.title}
           </Text>
           <Text textStyle="smallest" color="gray.500" mt="3px">
-            {currentTrack.author}
+            {currentTrack?.artiste}
           </Text>
         </Box>
       </Flex>
       <VStack w="70%">
         <audio
           id="audio"
-          src={currentTrack.src}
+          src={currentTrack?.trackData}
           ref={audioRef}
           onLoadedMetadata={onLoadedMetadata}
           onEnded={

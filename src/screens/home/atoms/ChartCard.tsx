@@ -1,9 +1,12 @@
-import { HStack, Img, Box, Text } from "@chakra-ui/react";
+import { HStack, Img, Box, Text, Flex } from "@chakra-ui/react";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { PlaylistType } from "common/types";
+import { HeartIcon } from "design/icons/HeartIcon";
+
 type ChartCardProps = {
-  chart: SpotifyApi.PlaylistObjectSimplified;
+  chart: PlaylistType;
 };
 
 const ChartCard: FC<ChartCardProps> = ({ chart }) => {
@@ -16,28 +19,27 @@ const ChartCard: FC<ChartCardProps> = ({ chart }) => {
       pr="21px"
       w="100%"
       justifyContent="space-between"
-      onClick={() => navigate(`/${chart.id}`, { state: { isAlbum: false } })}
+      onClick={() =>
+        navigate(`/${chart.id}`, {
+          state: { isAlbum: false, image: chart.image },
+        })
+      }
       cursor="pointer"
     >
       <HStack>
         <Box w="63px" h="63px">
-          <Img
-            src={chart.images[0].url}
-            maxW="100%"
-            maxH="100%"
-            borderRadius="10px"
-          />
+          <Img src={chart.image} maxW="100%" maxH="100%" borderRadius="10px" />
         </Box>
         <Box pl={3.5}>
           <Text textStyle="bigText" color="white">
             {chart.name}
           </Text>
           <Text textStyle="smaller" color="gray.300">
-            {chart.owner.display_name}
+            {chart.author}
           </Text>
         </Box>
       </HStack>
-      {/* <Flex
+      <Flex
         width="37px"
         height="37px"
         border="1px solid"
@@ -47,7 +49,7 @@ const ChartCard: FC<ChartCardProps> = ({ chart }) => {
         justifyContent="center"
       >
         <HeartIcon w="18px" h="18px" fill="transparent" />
-      </Flex> */}
+      </Flex>
     </HStack>
   );
 };

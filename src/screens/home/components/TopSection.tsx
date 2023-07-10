@@ -1,8 +1,6 @@
-import SpotifyWebApi from "spotify-web-api-js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import {
   Flex,
   Heading,
@@ -12,71 +10,35 @@ import {
   VStack,
   Img,
 } from "@chakra-ui/react";
-import ChartCard from "../atoms/ChartCard";
-import { setLoggedOff } from "redux/reducers/authorizationSlice";
+import { getDocs, collection } from "firebase/firestore";
 
-const spotifyApi = new SpotifyWebApi();
+import { auth, db } from "../../../firebaseConfig";
+import ChartCard from "../atoms/ChartCard";
+import { PlaylistType } from "common/types";
 
 const TopSection = () => {
-  const [featuredPlaylist, setFeaturedPlaylist] =
-    useState<SpotifyApi.PlaylistObjectSimplified>();
+  const [playlists, setPlaylists] = useState<PlaylistType[]>([]);
 
-  const [userPlaylists, setUserPlaylists] = useState<
-    SpotifyApi.PlaylistObjectSimplified[]
-  >([]);
-  const [firstPlaylist, setFirstPlayList] = useState("");
-  const [featuredTracks, setFeaturedTracks] = useState<
-    SpotifyApi.PlaylistTrackObject[]
-  >([]);
+  const playlistsCollectionRef = useMemo(() => collection(db, "playlists"), []);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getFeaturedPlaylist = async () => {
-      return await spotifyApi.getFeaturedPlaylists().then(
-        (data) => {
-          setFeaturedPlaylist(data.playlists.items[0]);
-          setFirstPlayList(data.playlists.items[0].id);
-        },
-        (error) => {
-          if (error.status === 401) dispatch(setLoggedOff());
-          console.log(error);
-        }
+    const getPlaylists = async () => {
+      const data = await getDocs(playlistsCollectionRef);
+      setPlaylists(
+        data.docs.map((doc) => ({
+          name: doc.data().name,
+          author: doc.data().author,
+          image: doc.data().image,
+          songs: doc.data().songs,
+          id: doc.id,
+        }))
       );
     };
-    getFeaturedPlaylist();
-  }, [dispatch]);
 
-  useEffect(() => {
-    const getPlaylistTracks = async () => {
-      return await spotifyApi.getPlaylistTracks(firstPlaylist).then(
-        (data) => {
-          setFeaturedTracks(data.items);
-        },
-        (error) => {
-          if (error.status === 401) dispatch(setLoggedOff());
-          console.log(error);
-        }
-      );
-    };
-    getPlaylistTracks();
-  }, [dispatch, firstPlaylist]);
-
-  useEffect(() => {
-    const getUserPaylists = async () => {
-      return await spotifyApi.getUserPlaylists().then(
-        (data) => {
-          setUserPlaylists(data.items);
-        },
-        (error) => {
-          if (error.status === 401) dispatch(setLoggedOff());
-          console.log(error);
-        }
-      );
-    };
-    getUserPaylists();
-  }, [dispatch]);
+    getPlaylists();
+  }, [playlistsCollectionRef]);
 
   return (
     <Flex justifyContent="space-between" w={{ sm: "100%", "2xl": "100%" }}>
@@ -103,28 +65,28 @@ const TopSection = () => {
           </Text>
           <Heading
             textStyle="h1"
-            onClick={() => navigate(`/${featuredPlaylist?.id}`)}
+            // onClick={() => navigate(`/${featuredPlaylist?.id}`)}
             cursor="pointer"
           >
-            {featuredPlaylist?.name}
+            {playlists[2]?.name}
           </Heading>
           <Text textStyle="small" color="white">
-            {featuredTracks.slice(0, 5).map((data) => (
-              <span>{data.track.name}, </span>
+            {playlists[2]?.songs?.map((data, index) => (
+              <span key={`playlist-preview-${index}`}>{data.title}, </span>
             ))}
             <br /> and so much more
           </Text>
         </VStack>
-        <Box>
-          <Img src="img/man.png" />
+        <Box height="100%">
+          <Img src={playlists[2]?.image} />
         </Box>
       </HStack>
       <VStack spacing={3} alignItems="flex-start" ml="22px" w="50%">
         <Heading textStyle="h2" mb="14px">
           Your playlists
         </Heading>
-        {userPlaylists.slice(0, 3).map((chart) => (
-          <ChartCard chart={chart} />
+        {playlists.slice(0, 3).map((chart, index) => (
+          <ChartCard key={`chart-card-${index}`} chart={chart} />
         ))}
       </VStack>
     </Flex>

@@ -14,9 +14,11 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import authorizationReducer, {
   setLoggedOff,
 } from "./reducers/authorizationSlice";
+import { audioPlayerSlice } from "./reducers/audioPlayerSlice";
 
 const appReducer = combineReducers({
   authorization: authorizationReducer,
+  audioPlayer: audioPlayerSlice.reducer,
 });
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
