@@ -26,7 +26,6 @@ import { RepeatSongIcon } from "design/icons/RepeatSongIcon";
 import { ShuffleIcon } from "design/icons/ShuffleIcon";
 import { SongBackIcon } from "design/icons/SongBackIcon";
 import { SongForwardIcon } from "design/icons/SongForwardIcon";
-import { songs } from "common/dummydata/Tracks";
 import { SongType, TrackType } from "common/types";
 import { setCurrentTrack, setIsPlaying } from "redux/reducers/audioPlayerSlice";
 
@@ -80,10 +79,10 @@ const AudioPlayer = () => {
     if (trackIndex === 0) {
       let lastTrackIndex = songsList.length - 1;
       setTrackIndex(lastTrackIndex);
-      dispatch(setCurrentTrack(songs[lastTrackIndex]));
+      dispatch(setCurrentTrack(songsList[lastTrackIndex]));
     } else {
       setTrackIndex((prev) => prev - 1);
-      dispatch(setCurrentTrack(songs[trackIndex - 1]));
+      dispatch(setCurrentTrack(songsList[trackIndex - 1]));
     }
   };
 
@@ -94,17 +93,17 @@ const AudioPlayer = () => {
   const handleRepeatSong = () => {
     if (repeatSong) {
       setTrackIndex((prev) => prev);
-      setCurrentTrack(songs[trackIndex]);
+      setCurrentTrack(songsList[trackIndex]);
     }
   };
 
   const handleSuffleSong = () => {
     let lastIndex = trackIndex;
     if (shuffleSong) {
-      const randomIndex = Math.floor(Math.random() * songs.length);
+      const randomIndex = Math.floor(Math.random() * songsList.length);
       if (randomIndex !== lastIndex) {
         setTrackIndex(randomIndex);
-        setCurrentTrack(songs[randomIndex]);
+        setCurrentTrack(songsList[randomIndex]);
         lastIndex = randomIndex;
         console.log(lastIndex);
       } else {
