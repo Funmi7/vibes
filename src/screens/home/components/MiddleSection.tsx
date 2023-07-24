@@ -1,39 +1,36 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { getDocs, collection } from "firebase/firestore";
+import { useEffect, useMemo, useState } from "react";
 
 import SongCard from "../atoms/SongCard";
-// import { setLoggedOff } from "redux/reducers/authorizationSlice";
-
-// const spotifyApi = new SpotifyWebApi();
+import { db } from "../../../firebaseConfig";
+import { AlbumType } from "common/types";
 
 const MiddleSection = () => {
-  // const [newReleases, setNewReleases] = useState<
-  //   SpotifyApi.AlbumObjectSimplified[]
-  // >([]);
-  // const dispatch = useDispatch();
+  const [albums, setAlbums] = useState<AlbumType[]>([]);
+  const albumsCollectionRef = useMemo(() => collection(db, "albums"), []);
+  useEffect(() => {
+    const getAlbums = async () => {
+      const data = await getDocs(albumsCollectionRef);
+      setAlbums(
+        data.docs.map((doc) => ({
+          artiste: doc.data().artiste,
+          image: doc.data().image,
+          name: doc.data().name,
+          id: doc.id,
+        }))
+      );
+    };
+    getAlbums();
+  });
 
-  // useEffect(() => {
-  //   const getNewReleases = async () => {
-  //     return await spotifyApi.getNewReleases().then(
-  //       (data) => {
-  //         setNewReleases(data.albums.items);
-  //       },
-  //       (error) => {
-  //         if (error.status === 401) dispatch(setLoggedOff());
-  //         console.log(error);
-  //       }
-  //     );
-  //   };
-  //   getNewReleases();
-  // }, [dispatch]);
   return (
     <Box mt="43px" w="full">
-      <Heading textStyle="h2">New releases.</Heading>
+      <Heading textStyle="h2">Selected Albums.</Heading>
       <Flex mt="13px" w="full" flexWrap="wrap">
-        {/* {newReleases.slice(0, 16).map(({ images, name, id }) => (
-          <SongCard image={images[1].url} title={name} id={id} />
-        ))} */}
+        {albums.map(({ artiste, image, name, id }) => (
+          <SongCard image={image} title={name} id={id} key={id} />
+        ))}
       </Flex>
     </Box>
   );

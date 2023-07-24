@@ -11,10 +11,10 @@ const initialState: AudioPlayerSlice = {
   isPlaying: false,
   currentTrack: {
     artiste: "",
-    duration: "",
     image: "",
     title: "",
     trackData: "",
+    albumName: "",
   },
 };
 

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Img, Box, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { url } from "inspector";
 
 type SongCardProps = {
   image: string;
@@ -18,15 +19,15 @@ const SongCard: FC<SongCardProps> = ({ image, title, id }) => {
       cursor={"pointer"}
       onClick={() => navigate(`${id}`, { state: { isAlbum: true } })}
     >
-      <Box w="153px" h="153px">
-        <Img
-          src={image}
-          alt="songs images"
-          maxW={"100%"}
-          maxH="100%"
-          borderRadius="25px"
-        />
-      </Box>
+      <Box
+        w="153px"
+        h="153px"
+        bgImage={`url(${image})`}
+        borderRadius="25px"
+        bgPos="top"
+        bgSize="cover"
+      />
+
       <Text textStyle="smaller" color="white" mt="5px">
         {title}
       </Text>

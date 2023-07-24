@@ -9,11 +9,7 @@ export type PlaylistType = {
   name: string;
   author: string;
   image: string;
-  songs: PlaylistSongType[] | null;
-};
-
-export type PlaylistSongType = {
-  title: string;
+  songs: string[];
 };
 
 export type SinglePlaylistType = {
@@ -25,8 +21,15 @@ export type SinglePlaylistType = {
 
 export type TrackType = {
   artiste: string;
-  duration: string;
   image: string;
   title: string;
   trackData: string;
+  albumName: string | null;
+};
+
+export type AlbumType = {
+  artiste: string;
+  image: string;
+  name: string;
+  id: string;
 };

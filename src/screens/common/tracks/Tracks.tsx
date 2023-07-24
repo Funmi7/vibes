@@ -1,9 +1,8 @@
 import { useMemo } from "react";
 import { VStack } from "@chakra-ui/react";
-import SpotifyWebApi from "spotify-web-api-js";
 import { useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getDocs, collection, CollectionReference } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
 import MainLayout from "layouts/MainLayout";
 import { useEffect, useState } from "react";
@@ -74,7 +73,6 @@ const TracksList = () => {
     const getPlaylistTracks = async () => {
       const data = await getDocs(singlePlaylistCollectionRef);
       // setSinglePlaylist(data.docs.map((doc) => ({})))
-      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       setSinglePlaylist(
         data.docs.map((doc) => ({
           artiste: doc.data().artiste,

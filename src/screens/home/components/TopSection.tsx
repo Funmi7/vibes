@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Flex,
@@ -12,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { getDocs, collection } from "firebase/firestore";
 
-import { auth, db } from "../../../firebaseConfig";
+import { db } from "../../../firebaseConfig";
 import ChartCard from "../atoms/ChartCard";
 import { PlaylistType } from "common/types";
 
@@ -61,31 +60,35 @@ const TopSection = () => {
           pt="38px"
         >
           <Text textStyle="smaller" color="white">
-            Editor's pick
+            Currated playlist
           </Text>
           <Heading
             textStyle="h1"
-            // onClick={() => navigate(`/${featuredPlaylist?.id}`)}
+            onClick={() =>
+              navigate(`/${playlists[0]?.id}`, {
+                state: { isAlbum: false, image: playlists[2]?.image },
+              })
+            }
             cursor="pointer"
           >
-            {playlists[2]?.name}
+            {playlists[0]?.name}
           </Heading>
           <Text textStyle="small" color="white">
-            {playlists[2]?.songs?.map((data, index) => (
-              <span key={`playlist-preview-${index}`}>{data.title}, </span>
+            {playlists[0]?.songs?.map((data, index) => (
+              <span key={`playlist-preview-${index}`}>{data}, </span>
             ))}
             <br /> and so much more
           </Text>
         </VStack>
         <Box height="100%">
-          <Img src={playlists[2]?.image} />
+          <Img src={playlists[0]?.image} />
         </Box>
       </HStack>
       <VStack spacing={3} alignItems="flex-start" ml="22px" w="50%">
         <Heading textStyle="h2" mb="14px">
           Your playlists
         </Heading>
-        {playlists.slice(0, 3).map((chart, index) => (
+        {playlists.slice(1, 4).map((chart, index) => (
           <ChartCard key={`chart-card-${index}`} chart={chart} />
         ))}
       </VStack>
