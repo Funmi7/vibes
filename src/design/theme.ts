@@ -132,6 +132,7 @@ const colors = {
   cyanBlue: "#A4C7C6",
   red: "#E5524A",
   gray: {
+    50: "#ffffff1a",
     100: "#ffffff3f",
     200: "#efeee03f",
     300: "#ffffff7f",

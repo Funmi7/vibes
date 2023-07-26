@@ -15,6 +15,7 @@ const initialState: AudioPlayerSlice = {
     title: "",
     trackData: "",
     albumName: "",
+    duration: "",
   },
 };
 

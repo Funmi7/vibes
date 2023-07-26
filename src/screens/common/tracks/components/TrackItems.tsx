@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { HStack, Box, Img, Text } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store";
 
 import { WhiteHeartIcon } from "design/icons/WhiteHeartIcon";
 import { TrackType } from "common/types";
@@ -11,19 +12,9 @@ type TrackItemProps = {
 };
 
 const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
-  // const [readableDur, setReadableDur] = useState("");
-
-  // useEffect(() => {
-  //   const msToTime = () => {
-  //     let minutes = Math.floor(trackItem.duration_ms / 60000);
-  //     let seconds = ((trackItem.duration_ms % 60000) / 1000).toFixed(0);
-
-  //     setReadableDur(
-  //       `${minutes} : ${Number(seconds) < 10 ? "0" : ""} ${seconds}`
-  //     );
-  //   };
-  //   msToTime();
-  // }, [trackItem]);
+  const currentTrack = useSelector(
+    (state: RootState) => state.audioPlayer.currentTrack
+  );
 
   const dispatch = useDispatch();
 
@@ -42,6 +33,8 @@ const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
       borderRadius={"15px"}
       p="8px 32px 9px 10px"
       onClick={handlePlaySongClick}
+      cursor="pointer"
+      _hover={{ bg: "rgba(51, 55, 59, 0.8)" }}
     >
       <HStack w="10%">
         <Box w="39px" h="39px" mr="20.13px">
@@ -50,15 +43,33 @@ const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
         <WhiteHeartIcon w="18px" h="16px" fill="transparent" />
       </HStack>
 
-      <Text textStyle="smaller" color="white" w="25%" textAlign={"start"}>
+      <Text
+        textStyle="smaller"
+        color={
+          currentTrack.title === trackItem.title ? "mainSecondary" : "white"
+        }
+        w="25%"
+        textAlign={"start"}
+      >
         {trackItem.title}
       </Text>
-      <Text textStyle="smaller" color="white" w="25%">
-        {"Single"}
+      <Text
+        textStyle="smaller"
+        color={
+          currentTrack.title === trackItem.title ? "mainSecondary" : "white"
+        }
+        w="25%"
+      >
+        {trackItem?.albumName || "Single"}
       </Text>
-      {/* <Text textStyle="smaller" color="white">
-        {trackItem.duration}
-      </Text> */}
+      <Text
+        textStyle="smaller"
+        color={
+          currentTrack.title === trackItem.title ? "mainSecondary" : "white"
+        }
+      >
+        {trackItem?.duration}
+      </Text>
     </HStack>
   );
 };

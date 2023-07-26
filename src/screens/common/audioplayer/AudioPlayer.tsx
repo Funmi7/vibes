@@ -26,27 +26,32 @@ import { RepeatSongIcon } from "design/icons/RepeatSongIcon";
 import { ShuffleIcon } from "design/icons/ShuffleIcon";
 import { SongBackIcon } from "design/icons/SongBackIcon";
 import { SongForwardIcon } from "design/icons/SongForwardIcon";
-import { SongType, TrackType } from "common/types";
 import { setCurrentTrack, setIsPlaying } from "redux/reducers/audioPlayerSlice";
+import { formatTime } from "utils/utilityFunctions";
 
 const AudioPlayer = () => {
   const songsList = useSelector(
     (state: RootState) => state.audioPlayer?.songList
   );
-  // console.log(songsList[0]);
   const currentTrack = useSelector(
     (state: RootState) => state.audioPlayer.currentTrack
   );
   const isPlaying = useSelector(
     (state: RootState) => state.audioPlayer.isPlaying
   );
+
+  const initialTrackState = {
+    artiste: "",
+    image: "",
+    title: "",
+    trackData: "",
+    albumName: "",
+    duration: "",
+  };
+
   const [trackIndex, setTrackIndex] = useState<number>(0);
-  // const [currentTrack, setCurrentTrack] = useState<TrackType | undefined>(
-  //   songsList[0]
-  // );
   const [timeProgress, setTimeProgress] = useState<number | undefined>(0);
   const [duration, setDuration] = useState<number | undefined>(0);
-  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(60);
   const [muteVolume, setMuteVolume] = useState<boolean>(false);
   const [updateValue, setUpdateValue] = useState<number>(0);
@@ -152,36 +157,22 @@ const AudioPlayer = () => {
       audioRef.current.currentTime = val;
     }
   };
-
-  const formatTime = (time: number | undefined) => {
-    if (time && !isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(time % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      return `${formatMinutes}:${formatSeconds}`;
-    }
-    return "00:00";
-  };
-
+  console.log(currentTrack);
+  console.log(initialTrackState);
   return (
-    // <Box position="relative" w="100%" height="125px">
-    //   <Box filter="blur(8px)" webkit-filter="blur(8px)" height="100%" />
     <HStack
       w="100%"
       height="125px"
-      background="rgba(29, 33, 35, 0.3)"
-      // backgroundColor="rgba(0,0,0, 0.4)"
-      border="1px solid rgba(255, 255, 255, 0.1)"
-      backdropFilter="blur(15px)"
+      background="primaryBg"
+      borderTop="1px"
+      borderColor="gray.50"
       pl="101px"
       pt="20px"
       position="fixed"
       bottom="0px"
       justifyContent="space-between"
       pr="66px"
-      // webkit-filter="blur(8px)"
-      // filter="blur(8px)"
+      opacity={currentTrack?.title === "" ? "0.2" : "1"}
     >
       <Flex>
         <Img src="/img/audioImages/song-image.svg" alt="song art cover" />

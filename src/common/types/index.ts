@@ -25,6 +25,7 @@ export type TrackType = {
   title: string;
   trackData: string;
   albumName: string | null;
+  duration: string;
 };
 
 export type AlbumType = {

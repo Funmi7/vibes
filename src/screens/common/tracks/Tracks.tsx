@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { VStack } from "@chakra-ui/react";
 import { useParams, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDocs, collection } from "firebase/firestore";
+import { RootState } from "redux/store";
 
 import MainLayout from "layouts/MainLayout";
 import { useEffect, useState } from "react";
@@ -79,12 +80,14 @@ const TracksList = () => {
           description: doc.data().description,
           name: doc.data().name,
           tracks: doc.data().tracks,
+          duration: doc.data().duration,
           id: doc.id,
         }))
       );
     };
     getPlaylistTracks();
   }, [singlePlaylistCollectionRef]);
+
   useEffect(() => {
     dispatch(setSongsList(singlePlaylist[0]?.tracks));
   });
