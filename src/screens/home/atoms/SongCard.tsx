@@ -1,7 +1,6 @@
 import { FC } from "react";
-import { Img, Box, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { url } from "inspector";
 
 type SongCardProps = {
   image: string;

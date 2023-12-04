@@ -30,7 +30,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           zIndex="0"
           overflowY={"scroll"}
           bg="primaryBg"
-          // h="calc(100% - 125px)"
+          h="calc(100vh - 215px)"
         >
           {children}
         </Box>

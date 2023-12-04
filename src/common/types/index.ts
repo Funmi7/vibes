@@ -34,3 +34,9 @@ export type AlbumType = {
   name: string;
   id: string;
 };
+
+export type SingleAlbumType = {
+  id: string;
+  name: string;
+  tracks: TrackType[];
+};

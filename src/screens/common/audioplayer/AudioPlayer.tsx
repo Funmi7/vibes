@@ -26,7 +26,11 @@ import { RepeatSongIcon } from "design/icons/RepeatSongIcon";
 import { ShuffleIcon } from "design/icons/ShuffleIcon";
 import { SongBackIcon } from "design/icons/SongBackIcon";
 import { SongForwardIcon } from "design/icons/SongForwardIcon";
-import { setCurrentTrack, setIsPlaying } from "redux/reducers/audioPlayerSlice";
+import {
+  setCurrentTrack,
+  setIsPlaying,
+  setTrackIndex,
+} from "redux/reducers/audioPlayerSlice";
 import { formatTime } from "utils/utilityFunctions";
 
 const AudioPlayer = () => {
@@ -39,17 +43,11 @@ const AudioPlayer = () => {
   const isPlaying = useSelector(
     (state: RootState) => state.audioPlayer.isPlaying
   );
+  const trackIndex = useSelector(
+    (state: RootState) => state.audioPlayer.trackIndex
+  );
 
-  const initialTrackState = {
-    artiste: "",
-    image: "",
-    title: "",
-    trackData: "",
-    albumName: "",
-    duration: "",
-  };
-
-  const [trackIndex, setTrackIndex] = useState<number>(0);
+  // const [trackIndex, setTrackIndex] = useState<number>(0);
   const [timeProgress, setTimeProgress] = useState<number | undefined>(0);
   const [duration, setDuration] = useState<number | undefined>(0);
   const [volume, setVolume] = useState<number>(60);
@@ -73,20 +71,26 @@ const AudioPlayer = () => {
 
   const handleNext = () => {
     if (trackIndex >= songsList.length - 1) {
-      setTrackIndex(0);
+      dispatch(setTrackIndex(0));
+      // setTrackIndex(0);
       dispatch(setCurrentTrack(songsList[0]));
     } else {
-      setTrackIndex((prev) => prev + 1);
+      // setTrackIndex((prev) => prev + 1);
+      // dispatch(setTrackIndex((prev: number) => prev + 1));
+      dispatch(setTrackIndex(trackIndex + 1));
       dispatch(setCurrentTrack(songsList[trackIndex + 1]));
     }
   };
   const handlePrevious = () => {
     if (trackIndex === 0) {
       let lastTrackIndex = songsList.length - 1;
-      setTrackIndex(lastTrackIndex);
+      // setTrackIndex(lastTrackIndex);
+      dispatch(setTrackIndex(lastTrackIndex));
       dispatch(setCurrentTrack(songsList[lastTrackIndex]));
     } else {
-      setTrackIndex((prev) => prev - 1);
+      // setTrackIndex((prev) => prev - 1);
+      // dispatch(setTrackIndex((prev: number) => prev - 1));
+      dispatch(setTrackIndex(trackIndex - 1));
       dispatch(setCurrentTrack(songsList[trackIndex - 1]));
     }
   };
@@ -97,7 +101,9 @@ const AudioPlayer = () => {
 
   const handleRepeatSong = () => {
     if (repeatSong) {
-      setTrackIndex((prev) => prev);
+      // setTrackIndex((prev) => prev);
+      // dispatch(setTrackIndex((prev: number) => prev));
+      dispatch(setTrackIndex(trackIndex));
       setCurrentTrack(songsList[trackIndex]);
     }
   };
@@ -157,8 +163,6 @@ const AudioPlayer = () => {
       audioRef.current.currentTime = val;
     }
   };
-  console.log(currentTrack);
-  console.log(initialTrackState);
   return (
     <HStack
       w="100%"
@@ -175,7 +179,16 @@ const AudioPlayer = () => {
       opacity={currentTrack?.title === "" ? "0.2" : "1"}
     >
       <Flex>
-        <Img src="/img/audioImages/song-image.svg" alt="song art cover" />
+        <Box
+          bgImage={`url(${currentTrack?.image})`}
+          h="49px"
+          w="49px"
+          borderRadius="14px"
+          objectFit="fill"
+          bgSize="cover"
+          bgRepeat="no-repeat"
+          bgPos="center center"
+        />
         <Box mt="2px" ml="13px">
           <Text textStyle="h4" color="white">
             {currentTrack?.title}

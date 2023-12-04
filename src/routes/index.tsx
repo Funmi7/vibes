@@ -1,16 +1,40 @@
 import { Route, Routes } from "react-router-dom";
-import Homepage from "../screens/home/Homepage";
+import { lazy, Suspense } from "react";
 
-import Login from "screens/login/LoginPage";
 import PrivateRoute from "./PrivateRoute";
-import TracksList from "screens/common/tracks/Tracks";
+import CenterLoader from "common/components/loader/CenterLoader";
+
+const Login = lazy(() => import("screens/login/LoginPage"));
+const Homepage = lazy(() => import("screens/home/Homepage"));
+const TracksList = lazy(() => import("screens/common/tracks/Tracks"));
 
 const AllRoutes = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<PrivateRoute component={Homepage} />} />
-      <Route path="/:id" element={<PrivateRoute component={TracksList} />} />
+      <Route
+        path="/login"
+        element={
+          <Suspense fallback={<CenterLoader />}>
+            <Login />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <Suspense fallback={<CenterLoader />}>
+            <PrivateRoute component={Homepage} />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/:id"
+        element={
+          <Suspense fallback={<CenterLoader />}>
+            <PrivateRoute component={TracksList} />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };

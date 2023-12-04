@@ -5,6 +5,7 @@ type AudioPlayerSlice = {
   songList: TrackType[];
   isPlaying: boolean;
   currentTrack: TrackType;
+  trackIndex: number;
 };
 const initialState: AudioPlayerSlice = {
   songList: [],
@@ -17,6 +18,7 @@ const initialState: AudioPlayerSlice = {
     albumName: "",
     duration: "",
   },
+  trackIndex: 0,
 };
 
 export const audioPlayerSlice = createSlice({
@@ -32,10 +34,13 @@ export const audioPlayerSlice = createSlice({
     setCurrentTrack: (state, action) => {
       state.currentTrack = action.payload;
     },
+    setTrackIndex: (state, action) => {
+      state.trackIndex = action.payload;
+    },
   },
 });
 
-export const { setSongsList, setIsPlaying, setCurrentTrack } =
+export const { setSongsList, setIsPlaying, setCurrentTrack, setTrackIndex } =
   audioPlayerSlice.actions;
 
 // export default audioPlayerSlice.reducer;

@@ -5,13 +5,18 @@ import { RootState } from "redux/store";
 
 import { WhiteHeartIcon } from "design/icons/WhiteHeartIcon";
 import { TrackType } from "common/types";
-import { setCurrentTrack, setIsPlaying } from "redux/reducers/audioPlayerSlice";
+import {
+  setCurrentTrack,
+  setIsPlaying,
+  setTrackIndex,
+} from "redux/reducers/audioPlayerSlice";
 
 type TrackItemProps = {
   trackItem: TrackType;
+  index: number;
 };
 
-const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
+const TrackItems: FC<TrackItemProps> = ({ trackItem, index }) => {
   const currentTrack = useSelector(
     (state: RootState) => state.audioPlayer.currentTrack
   );
@@ -21,6 +26,7 @@ const TrackItems: FC<TrackItemProps> = ({ trackItem }) => {
   const handlePlaySongClick = () => {
     dispatch(setIsPlaying(true));
     dispatch(setCurrentTrack(trackItem));
+    dispatch(setTrackIndex(index));
   };
 
   return (
